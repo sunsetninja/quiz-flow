@@ -1,0 +1,95 @@
+{
+  "questions": [
+    {
+      "id": "9b9b3f72-702e-4eee-8235-4b8d51c6925d",
+      "question": "1 вопрос",
+      "isHead": true,
+      "answers": [
+        {
+          "id": "cc3f9751-c62f-45ab-9271-18ebce46e404",
+          "text": "Ответ 1",
+          "questions": [
+            {
+              "id": "aee29252-b2e8-4093-96be-6cf90f4104e2",
+              "question": "3 вопрос",
+              "isHead": false,
+              "multipleAnswers": false,
+              "answers": [
+                {
+                  "id": "1a2618e2-2c4f-42e6-abef-be785e7f2b4f",
+                  "text": "Ответ 1",
+                  "questions": []
+                },
+                {
+                  "id": "3dc98ba7-275c-4291-91a3-82cbe6ddae03",
+                  "text": "Ответ 2",
+                  "questions": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "67fb485e-a8fe-414d-a26e-c9d4f9aea49d",
+          "text": "Ответ 2",
+          "questions": []
+        }
+      ]
+    },
+    {
+      "id": "a9d15820-0660-48da-bfe7-94158180fa73",
+      "question": "2 вопрос",
+      "isHead": true,
+      "multipleAnswers": false,
+      "answers": [
+        {
+          "id": "49e02734-3ab6-4876-941b-fcd347f8cbb2",
+          "text": "Ответ 1",
+          "questions": [
+            {
+              "id": "aee29252-b2e8-4093-96be-6cf90f4104e2",
+              "question": "3 вопрос",
+              "isHead": false,
+              "multipleAnswers": false,
+              "answers": [
+                {
+                  "id": "1a2618e2-2c4f-42e6-abef-be785e7f2b4f",
+                  "text": "Ответ 1",
+                  "questions": []
+                },
+                {
+                  "id": "3dc98ba7-275c-4291-91a3-82cbe6ddae03",
+                  "text": "Ответ 2",
+                  "questions": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "d0fa89f4-4202-492a-958c-224efffc2f03",
+          "text": "Ответ 2",
+          "questions": []
+        }
+      ]
+    },
+    {
+      "id": "aee29252-b2e8-4093-96be-6cf90f4104e2",
+      "question": "3 вопрос",
+      "isHead": false,
+      "multipleAnswers": false,
+      "answers": [
+        {
+          "id": "1a2618e2-2c4f-42e6-abef-be785e7f2b4f",
+          "text": "Ответ 1",
+          "questions": []
+        },
+        {
+          "id": "3dc98ba7-275c-4291-91a3-82cbe6ddae03",
+          "text": "Ответ 2",
+          "questions": []
+        }
+      ]
+    }
+  ]
+}
