@@ -1,5 +1,6 @@
-const { first, last, makePair, findQuestionAnswers } = require("./utils.js");
-const { findNextQuestionPath } = require("./find-next-question-path.js");
+const { TERMINATE } = require("./constants");
+const { first, makePair, findQuestionAnswers } = require("./utils.js");
+const { findNextQuestion } = require("./find-next-question.js");
 
 function* quizFlow(questions, startQuestion, path = []) {
   let currentQuestion = startQuestion || first(questions);
@@ -26,31 +27,44 @@ function* quizFlow(questions, startQuestion, path = []) {
 
         let next = iter.next();
         let nextAnswer = null;
+
         while (!next.done) {
           nextAnswer = yield next.value;
-
           /**
            * переопределяем пару вопрос/ответ из замыкания для того,
            * чтобы когда выйдем из рекурсии последняя пара вопрос/ответ
            * стала новой внешней и можно было на основе неё продолжить флоу
            */
           if (next.value) {
-            path.push(makePair(next.value, nextAnswer));
             currentQuestion = next.value;
             answerId = nextAnswer;
+
+            path.push(makePair(currentQuestion, answerId));
           }
 
           next = iter.next(nextAnswer);
         }
+
+        /**
+         * Если один из ответов привел к окончанию опроса
+         * завершаем обход ответов
+         */
+        if (next.value === TERMINATE) {
+          break;
+        }
       }
     } else {
-      currentQuestion = last(
-        findNextQuestionPath(questions, path)
-      ).getQuestion();
-      // Если следующего вопроса нет, то флоу окончен
-      if (!currentQuestion) return currentQuestion;
-      answerId = yield currentQuestion;
+      currentQuestion = findNextQuestion(questions, path);
+      /**
+       * Если следующего вопроса нет
+       * или ответ привел к окончанию опроса
+       * то флоу окончен
+       */
+      if (currentQuestion === TERMINATE || currentQuestion === null) {
+        return currentQuestion;
+      }
 
+      answerId = yield currentQuestion;
       path.push(makePair(currentQuestion, answerId));
     }
   }

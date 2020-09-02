@@ -1,9 +1,8 @@
-const { makePair } = require("./utils.js");
+const { TERMINATE } = require("./constants");
 
-function findNextQuestionPath(questions, path) {
+function findNextQuestion(questions, path) {
   let currentQuestion = null;
   let nextQuestion = null;
-  let nextQuestionPath = [...path];
   let remainPath = [...path];
 
   function find(questions) {
@@ -29,15 +28,22 @@ function findNextQuestionPath(questions, path) {
            */
           if (remainPath.length === 0) {
             currentQuestion = question;
+            const currentAnswer = currentQuestion.answers.find(
+              ({ id }) => id === pathAnswerId
+            );
+
+            if (currentAnswer.isTerminate) {
+              nextQuestion = TERMINATE;
+              console.log("FINDED TERMINATE");
+              return;
+            }
 
             /**
              * Если текущий вопрос HEAD,
              * берём первый вопрос из вопросов выбранного ответа
              */
             if (currentQuestion.isHead) {
-              nextQuestion = currentQuestion.answers.find(
-                ({ id }) => id === pathAnswerId
-              ).questions[0];
+              nextQuestion = currentAnswer.questions[0];
               return;
             }
 
@@ -46,7 +52,6 @@ function findNextQuestionPath(questions, path) {
              * берём следующий из его коллекции
              */
             if (questions[i + 1]) {
-              nextQuestionPath.pop();
               nextQuestion = questions[i + 1];
               return;
             }
@@ -80,9 +85,7 @@ function findNextQuestionPath(questions, path) {
 
   find(questions);
 
-  nextQuestionPath.push(makePair(nextQuestion, null));
-
-  return nextQuestionPath;
+  return nextQuestion;
 }
 
-module.exports = { findNextQuestionPath };
+module.exports = { findNextQuestion };

@@ -40,7 +40,7 @@
                       "id": 30011,
                       "title": "how much do it eat wet food a day?",
                       "answers": [
-                        { "id": 300111, "title": "much" },
+                        { "id": 300111, "title": "much", "isTerminate": true },
                         { "id": 300112, "title": "not much" }
                       ]
                     },
@@ -213,7 +213,8 @@
                       "answers": [
                         {
                           "id": 3011111,
-                          "title": "yes"
+                          "title": "yes",
+                          "isTerminate": false
                         },
                         {
                           "id": 3011112,
