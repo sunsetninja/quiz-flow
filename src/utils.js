@@ -14,12 +14,8 @@ function findQuestionAnswers(question, answerId) {
   }
 }
 
-function makePair(question, qAnswer) {
-  let answer =
-    typeof qAnswer !== "object" || Array.isArray(qAnswer)
-      ? findQuestionAnswers(question, qAnswer)
-      : qAnswer;
-
+// (questionId, answerId)
+function makePair(question, answer) {
   return {
     question,
     answer,

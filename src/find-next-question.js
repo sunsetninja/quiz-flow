@@ -16,8 +16,8 @@ function findNextQuestion(questions, path) {
        * мы должны быть на глубине currentQuestion
        */
       if (!currentQuestion) {
-        const pathQuestionId = remainPath[0].getQuestion().id;
-        const pathAnswerId = remainPath[0].getAnswer().id;
+        const pathQuestionId = remainPath[0].getQuestion();
+        const pathAnswerId = remainPath[0].getAnswer();
 
         if (question.id === pathQuestionId) {
           remainPath.shift();
@@ -34,7 +34,6 @@ function findNextQuestion(questions, path) {
 
             if (currentAnswer.isTerminate) {
               nextQuestion = TERMINATE;
-              console.log("FINDED TERMINATE");
               return;
             }
 

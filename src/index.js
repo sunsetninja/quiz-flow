@@ -2,72 +2,80 @@ const { TERMINATE } = require("./constants");
 const { first, makePair, findQuestionAnswers } = require("./utils.js");
 const { findNextQuestion } = require("./find-next-question.js");
 
-function* quizFlow(questions, startQuestion, path = []) {
-  let currentQuestion = startQuestion || first(questions);
-  let answerId = yield currentQuestion;
+function createQuizFlow() {
+  let quizPath = [];
 
-  path.push(makePair(currentQuestion, answerId));
+  function* quizFlow(questions, startQuestion, path = []) {
+    let currentQuestion = startQuestion || first(questions);
+    let answerId = yield currentQuestion;
 
-  while (currentQuestion) {
-    if (Array.isArray(answerId)) {
-      for (const givenAnswer of findQuestionAnswers(
-        currentQuestion,
-        answerId
-      )) {
-        /**
-         * нужно создавать новый путь, так как если передавать старый
-         * то по нему нельзя будет искать по givenAnswer.questions
-         * TODO: как то нужно сохранять путь
-         */
-        const iter = quizFlow(
-          givenAnswer.questions,
-          first(givenAnswer.questions),
-          []
-        );
+    const pair = makePair(currentQuestion.id, answerId);
+    path.push(pair);
+    quizPath.push(pair);
 
-        let next = iter.next();
-        let nextAnswer = null;
+    while (currentQuestion) {
+      if (Array.isArray(answerId)) {
+        for (const givenAnswer of findQuestionAnswers(
+          currentQuestion,
+          answerId
+        )) {
+          const iter = quizFlow(
+            givenAnswer.questions,
+            first(givenAnswer.questions),
+            []
+          );
 
-        while (!next.done) {
-          nextAnswer = yield next.value;
-          /**
-           * переопределяем пару вопрос/ответ из замыкания для того,
-           * чтобы когда выйдем из рекурсии последняя пара вопрос/ответ
-           * стала новой внешней и можно было на основе неё продолжить флоу
-           */
-          if (next.value) {
-            currentQuestion = next.value;
-            answerId = nextAnswer;
+          let next = iter.next();
+          let nextAnswer = null;
 
-            path.push(makePair(currentQuestion, answerId));
+          while (!next.done) {
+            nextAnswer = yield next.value;
+            /**
+             * переопределяем пару вопрос/ответ из замыкания для того,
+             * чтобы когда выйдем из рекурсии последняя пара вопрос/ответ
+             * стала новой внешней и можно было на основе неё продолжить флоу
+             */
+            if (next.value) {
+              currentQuestion = next.value;
+              answerId = nextAnswer;
+
+              path.push(makePair(currentQuestion.id, answerId));
+            }
+
+            next = iter.next(nextAnswer);
           }
 
-          next = iter.next(nextAnswer);
+          /**
+           * Если один из ответов привел к окончанию опроса
+           * завершаем обход ответов
+           */
+          if (next.value === TERMINATE) {
+            break;
+          }
         }
-
+      } else {
+        currentQuestion = findNextQuestion(questions, path);
         /**
-         * Если один из ответов привел к окончанию опроса
-         * завершаем обход ответов
+         * Если следующего вопроса нет
+         * или ответ привел к окончанию опроса
+         * то флоу окончен
          */
-        if (next.value === TERMINATE) {
-          break;
+        if (currentQuestion === TERMINATE || currentQuestion === null) {
+          return currentQuestion;
         }
-      }
-    } else {
-      currentQuestion = findNextQuestion(questions, path);
-      /**
-       * Если следующего вопроса нет
-       * или ответ привел к окончанию опроса
-       * то флоу окончен
-       */
-      if (currentQuestion === TERMINATE || currentQuestion === null) {
-        return currentQuestion;
-      }
 
-      answerId = yield currentQuestion;
-      path.push(makePair(currentQuestion, answerId));
+        answerId = yield currentQuestion;
+
+        const pair = makePair(currentQuestion.id, answerId);
+        path.push(pair);
+        quizPath.push(pair);
+      }
     }
   }
+
+  quizFlow.getPath = () => quizPath;
+
+  return quizFlow;
 }
 
-module.exports = { quizFlow };
+module.exports = { createQuizFlow };

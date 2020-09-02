@@ -1,10 +1,13 @@
-const { first } = require("./utils.js");
+const { first, makePair } = require("./utils.js");
 
 // const data1 = require("../fixtures/data1.json");
 const data2 = require("../fixtures/data2.json");
+const data3 = require("../fixtures/data3.json");
 
-const { quizFlow } = require("./index.js");
+const { createQuizFlow } = require("./index.js");
+const { isPathValid } = require("./is-path-valid.js");
 
+const quizFlow = createQuizFlow();
 const iter = quizFlow(data2.questions, first(data2.questions));
 
 let question;
@@ -31,3 +34,22 @@ if (question.done) {
 } else {
   console.log({ nextQuestion: question.value });
 }
+
+const validPath = quizFlow.getPath();
+
+console.log({ isValid: isPathValid(data2.questions, validPath) });
+
+const isValid = isPathValid(data3.questions, [
+  makePair(100, 101),
+  makePair(1000, 1001),
+  makePair(2000, 2001),
+  makePair(3000, 3002),
+  makePair(4000, 4002),
+  makePair(5000, [5001, 5002]),
+  makePair(50011, 500111),
+  makePair(50012, 500121),
+  makePair(50021, 500212),
+  makePair(50022, 500221),
+]);
+
+console.log({ isValid });
