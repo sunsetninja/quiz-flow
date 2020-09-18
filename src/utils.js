@@ -28,9 +28,34 @@ function makePair(question, answer) {
   };
 }
 
+function hasQuestionInAnswers(node, questionId) {
+  function hasQuestionInNode(node) {
+    return hasQuestionInAnswers(node, questionId);
+  }
+
+  // Answer
+  if (node.questions) {
+    if (node.questions.some(({ id }) => id === questionId)) {
+      return true;
+    }
+
+    return node.questions.some(hasQuestionInNode);
+  }
+
+  // Question
+  if (node.answers) {
+    if (node.id === questionId) return true;
+
+    return node.answers
+      .filter(({ questions }) => questions)
+      .some(({ questions }) => questions.some(hasQuestionInNode));
+  }
+}
+
 module.exports = {
   first,
   last,
   findQuestionAnswers,
+  hasQuestionInAnswers,
   makePair,
 };
