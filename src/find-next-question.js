@@ -59,10 +59,18 @@ function findNextQuestion(questions, path) {
           }
 
           if (question.isHead) {
-            for (const answer of question.answers) {
-              if (!currentQuestion) {
-                find(answer.questions);
+            if (Array.isArray(pathAnswerId)) {
+              const givenAnswers = question.answers.filter(({ id }) =>
+                pathAnswerId.includes(id)
+              );
+              for (const { questions } of givenAnswers) {
+                find(questions);
               }
+            } else {
+              const givenAnswer = question.answers.find(
+                ({ id }) => id === pathAnswerId
+              );
+              find(givenAnswer.questions);
             }
           }
         }

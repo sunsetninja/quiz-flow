@@ -6,6 +6,22 @@ function last(arr) {
   return arr[arr.length - 1];
 }
 
+const question = (id, answers = [], meta = {}) => {
+  return {
+    id,
+    ...meta,
+    answers,
+  };
+};
+
+const answer = (id, questions = [], meta = {}) => {
+  return {
+    id,
+    ...meta,
+    questions,
+  };
+};
+
 function findQuestionAnswers(question, answerId) {
   if (Array.isArray(answerId)) {
     return question.answers.filter(({ id }) => answerId.includes(id));
@@ -55,6 +71,8 @@ function hasQuestionInAnswers(node, questionId) {
 module.exports = {
   first,
   last,
+  question,
+  answer,
   findQuestionAnswers,
   hasQuestionInAnswers,
   makePair,
