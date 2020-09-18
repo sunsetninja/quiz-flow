@@ -1,0 +1,95 @@
+{
+  "questions": [
+    {
+      "id": "89a14079-598d-43b7-b378-6b64a68987ca",
+      "question": "Новый вопрос 1",
+      "answers": [
+        {
+          "id": "01d60a3e-4d7c-438b-a64d-c7ab3b13b4d0",
+          "text": "q2",
+          "questions": [
+            {
+              "id": "be1f895b-43e0-4265-beb3-0fef129d6e07",
+              "question": "some question 2",
+              "isHead": false,
+              "multipleAnswers": false,
+              "answers": [
+                {
+                  "id": "ccc492c8-18e5-4cb7-8bd9-0bccda43efa0",
+                  "text": "some answer 1",
+                  "questions": []
+                },
+                {
+                  "id": "f228f66c-82bb-45a0-a965-a07437f9c408",
+                  "text": "some answer 2",
+                  "questions": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "23f7eaa6-8919-4c01-96d1-a3fea5f02687",
+          "text": "q3",
+          "questions": [
+            {
+              "id": "ea3f0e5a-bd04-495b-afa2-bfa127b5424b",
+              "question": "some question 3",
+              "isHead": false,
+              "multipleAnswers": false,
+              "answers": [
+                {
+                  "id": "d5ec6e81-15aa-4163-b5f5-2c1454cebbda",
+                  "text": "some answer 1",
+                  "questions": []
+                },
+                {
+                  "id": "94a90a82-0ec7-4e63-9c71-3f1cd45a67fc",
+                  "text": "some answer 2",
+                  "questions": []
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "isHead": true
+    },
+    {
+      "id": "be1f895b-43e0-4265-beb3-0fef129d6e07",
+      "question": "some question 2",
+      "isHead": false,
+      "multipleAnswers": false,
+      "answers": [
+        {
+          "id": "ccc492c8-18e5-4cb7-8bd9-0bccda43efa0",
+          "text": "some answer 1",
+          "questions": []
+        },
+        {
+          "id": "f228f66c-82bb-45a0-a965-a07437f9c408",
+          "text": "some answer 2",
+          "questions": []
+        }
+      ]
+    },
+    {
+      "id": "ea3f0e5a-bd04-495b-afa2-bfa127b5424b",
+      "question": "some question 3",
+      "isHead": false,
+      "multipleAnswers": false,
+      "answers": [
+        {
+          "id": "d5ec6e81-15aa-4163-b5f5-2c1454cebbda",
+          "text": "some answer 1",
+          "questions": []
+        },
+        {
+          "id": "94a90a82-0ec7-4e63-9c71-3f1cd45a67fc",
+          "text": "some answer 2",
+          "questions": []
+        }
+      ]
+    }
+  ]
+}

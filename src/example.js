@@ -1,8 +1,9 @@
-const { first, makePair } = require("./utils.js");
+const { first, makePair, hasQuestionInAnswers } = require("./utils.js");
 
 // const data1 = require("../fixtures/data1.json");
 const data2 = require("../fixtures/data2.json");
 const data3 = require("../fixtures/data3.json");
+const data4 = require("../fixtures/data4.json");
 
 const { createQuizFlow } = require("./index.js");
 const { isPathValid } = require("./is-path-valid.js");
@@ -37,7 +38,7 @@ if (question.done) {
 
 const validPath = quizFlow.getPath();
 
-console.log({ isValid: isPathValid(data2.questions, validPath) });
+// console.log({ isValid: isPathValid(data2.questions, validPath) });
 
 const isValid = isPathValid(data3.questions, [
   makePair(100, 101),
@@ -52,4 +53,22 @@ const isValid = isPathValid(data3.questions, [
   makePair(50022, 500221),
 ]);
 
-console.log({ isValid });
+console.log(hasQuestionInAnswers(data2.questions[1], 201112));
+
+const quizFlow4 = createQuizFlow();
+const iter4 = quizFlow4(data4.questions, first(data4.questions));
+
+let question4;
+question4 = iter4.next();
+question4 = iter4.next("01d60a3e-4d7c-438b-a64d-c7ab3b13b4d0");
+question4 = iter4.next("ccc492c8-18e5-4cb7-8bd9-0bccda43efa0");
+question4 = iter4.next("ccc492c8-18e5-4cb7-8bd9-0bccda43efa0");
+question4 = iter4.next("d5ec6e81-15aa-4163-b5f5-2c1454cebbda");
+
+if (question4.done) {
+  console.log("end of a quiz 4");
+} else {
+  console.log({ nextQuestion: question4.value });
+}
+
+// console.log({ isValid });
