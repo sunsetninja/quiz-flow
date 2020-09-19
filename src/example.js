@@ -38,7 +38,7 @@ if (question.done) {
 
 const validPath = quizFlow.getPath();
 
-// console.log({ isValid: isPathValid(data2.questions, validPath) });
+console.log({ isValid: isPathValid(data2.questions, validPath) });
 
 const isValid = isPathValid(data3.questions, [
   makePair(100, 101),
@@ -71,4 +71,4 @@ if (question4.done) {
   console.log({ nextQuestion: question4.value });
 }
 
-// console.log({ isValid });
+console.log({ isValid });
