@@ -1,5 +1,13 @@
 const { createQuizFlow } = require("../src/index.js");
-const { question, answer, first } = require("../src/utils.js");
+const { first } = require("../src/utils.js");
+
+const question = (id, answers = [], meta = {}) => {
+  return { id, ...meta, answers };
+};
+
+const answer = (id, questions = [], meta = {}) => {
+  return { id, ...meta, questions };
+};
 
 test("flat survey test", () => {
   const flow = [
