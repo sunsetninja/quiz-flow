@@ -1,5 +1,7 @@
 # Quiz flow
 
+[![Node.js CI](https://github.com/sunsetninja/quiz-flow/workflows/Node.js%20CI/badge.svg)](https://github.com/sunsetninja/quiz-flow/actions)
+
 ## Генератор флоу
 
 - создается через `createQuizFlow`
